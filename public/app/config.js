@@ -8,6 +8,24 @@ var CGJ = {
     },
 
 
+    //add default controls
+    controls : {
+      keyboard: {
+          RUN: {
+              key1: '17',
+              key2: '39'
+          },
+          JUMP: {
+              key1: '32',
+              key2: '38'
+          }
+      },
+        touch: {
+            RUN : 'press',
+            JUMP: 'pressup'
+        }
+    },
+
     players : {
 
         //vidas
