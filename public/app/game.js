@@ -1,5 +1,4 @@
 var width = document.body.clientWidth > 1000 ? document.body.clientWidth : 1000;
-
 var renderer = PIXI.autoDetectRenderer( width , 300,  { transparent: true, view: document.getElementById('header-canvas') });
 var stage = new PIXI.Container();
 var enemy = [];
@@ -165,8 +164,3 @@ window.onresize = function() {
   width = document.body.clientWidth > 1000 ? document.body.clientWidth : 1000;
   renderer.resize(width , 300);
 };
-
-
-
-
-
