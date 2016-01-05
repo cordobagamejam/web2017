@@ -29,6 +29,8 @@ function onLoadedCallback(loader, resources) {
     yeti = new player(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, stage);
     socket.emit('add user', yetiName);
 
+    controls(yeti);
+
     customBg.tilingSprite.position.y = 50;
     customBg2.tilingSprite.position.y = 295;
 
@@ -51,10 +53,6 @@ socket.on('init users', function(data){
                 var playerData = users[i].playerData;
 
                 if(playerData){
-
-                    console.log('pos', playerData);
-
-
                     newEnemy.initPosition({x: playerData.x, y: playerData.y});
                 }
 
@@ -108,55 +106,6 @@ function animate(timestamp) {
 
     renderer.render(stage);
     previous = timestamp;
-
-}
-
-document.onkeydown = checkKey;
-document.onkeyup = checkKeyUp;
-
-
-function checkKeyUp (e) {
-    e = e || window.event;
-    if (e.keyCode == '39') {
-        // right arrow
-        yeti.run(true, false);
-    }
-}
-
-
-var myElement = document.getElementById('header-canvas');
-var mc = Hammer(myElement);
-
-mc.on('press', function(e) {
-    yeti.run(true, !yeti.velocity.fast);
-});
-
-mc.on('pressup', function(e) {
-    yeti.run(true, false);
-    yeti.DoJump();
-});
-
-function checkKey(e) {
-
-    e = e || window.event;
-
-    if (e.keyCode == '38') {
-        // up arrow
-        yeti.run(true, yeti.velocity.fast);
-        yeti.DoJump();
-    }
-    else if (e.keyCode == '40') {
-        yeti.destroy();
-        // down arrow
-    }
-    else if (e.keyCode == '37') {
-        // left arrow
-        yeti.stop();
-    }
-    else if (e.keyCode == '39') {
-        // right arrow
-        yeti.run(true, true);
-    }
 
 }
 
