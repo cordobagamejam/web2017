@@ -9,27 +9,25 @@
 
   <body>
 
-  <header id="header">
-    <canvas id="header-canvas"></canvas>
-    <h1 class="main-header">Cordoba Game Jam</h1>
-  </header>
+    <canvas id="main-canvas"></canvas>
+    <canvas id="main"></canvas>
 
 
     <!-- build:vendor -->
-    <script src="/app/lodash.js"></script>
-    <script src="/app/hammer.js"></script>
+    <script src="/app/vendor/lodash.js"></script>
+    <script src="/app/vendor/socketio.js"></script>
+    <script src="/app/vendor/pixi.js"></script>
+    <script src="/app/vendor/hammer.js"></script>
 
-    <script src="/app/socketio.js"></script>
-    <script src="/app/pixi.js"></script>
     <!-- endbuild -->
 
     <!-- build:js -->
-    <script src="/app/controls.js"></script>
-    <script src="/app/config.js"></script>
-    <script src="/app/background.js"></script>
-    <script src="/app/player.js"></script>
-    <script src="/app/game.js"></script>
-    <script src="/app/app.js"></script>
+    <script src="/app/custom/renderer.js"></script>
+    <script src="/app/custom/controls.js"></script>
+    <script src="/app/custom/config.js"></script>
+    <script src="/app/custom/background.js"></script>
+    <script src="/app/custom/player.js"></script>
+    <script src="/app/custom/game.js"></script>
     <!-- endbuild -->
 
   </body>
