@@ -2,6 +2,8 @@ var CGJ = {
 
     fps: 60,
 
+
+
     gravity: {
         max: 40,
         acceleration: 1

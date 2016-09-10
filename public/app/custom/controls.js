@@ -10,7 +10,7 @@ function controls (user) {
 
     // add touch controls
 
-    var element = document.getElementById('header-canvas');
+    var element = document.getElementById('main-canvas');
     var mc = Hammer(element);
 
     mc.on(CGJ.controls.touch.RUN, checkPress);

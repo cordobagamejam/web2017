@@ -1,5 +1,9 @@
 var width = document.body.clientWidth > 1000 ? document.body.clientWidth : 1000;
-var renderer = PIXI.autoDetectRenderer( width , 300,  { transparent: true, view: document.getElementById('header-canvas') });
+var height = document.body.clientHeight > 500 ? document.body.clientHeight : 500;
+
+var renderer = PIXI.autoDetectRenderer( width , height,  { transparent: true, view: document.getElementById('main-canvas') });
+
+var r = new ntRenderer('main');
 var stage = new PIXI.Container();
 var enemy = [];
 var yetiTexture;
@@ -19,8 +23,8 @@ PIXI.loader
 
 
 function onLoadedCallback(loader, resources) {
-    customBg = new background(resources.texture2.texture, renderer.width , undefined, stage, 0.3);
-    customBg2 = new background(resources.texture.texture, renderer.width , undefined, stage, 0);
+    customBg = new background(resources.texture2.texture, r.width , undefined, r.stage, 0.3);
+    customBg2 = new background(resources.texture.texture, r.width , undefined, r.stage, 0);
 
     yetiName = prompt('Elija un nombre','Jugador1');
 
@@ -94,7 +98,7 @@ function animate(timestamp) {
 
         if(yeti.velocity.running) {
             if(yeti.sprite.position.x > width * 0.3) {
-                stage.position.x -= yeti.velocity.actual;
+                r.stage.position.x -= yeti.velocity.actual;
                 customBg.tilingSprite.position.x += yeti.velocity.actual;
                 customBg2.tilingSprite.position.x += yeti.velocity.actual;
             }
@@ -104,12 +108,8 @@ function animate(timestamp) {
     }
 
 
-    renderer.render(stage);
+    r.render();
     previous = timestamp;
 
 }
 
-window.onresize = function() {
-  width = document.body.clientWidth > 1000 ? document.body.clientWidth : 1000;
-  renderer.resize(width , 300);
-};
