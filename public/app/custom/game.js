@@ -1,10 +1,6 @@
-var r = new ntRenderer('main');
+var r = new gjRenderer('main');
 var enemy = [];
 var yetiTexture;
-
-var previous = 0,
-    frameDuration = 1000 / CGJ.fps,
-    lag = 0;
 
 var socket = io();
 
@@ -32,7 +28,22 @@ function onLoadedCallback(loader, resources) {
     customBg.tilingSprite.position.y = 50;
     customBg2.tilingSprite.position.y = 295;
 
-    animate();
+    r.doLoop(gameUpdate);
+}
+
+
+function gameUpdate() {
+    customBg.update(yeti.velocity.running ? yeti.velocity.actual : 0);
+    customBg2.update(yeti.velocity.running ? yeti.velocity.actual : 0);
+
+    if(yeti.velocity.running) {
+        if(yeti.sprite.position.x > r.width * 0.3) {
+            r.stage.position.x -= yeti.velocity.actual;
+            customBg.tilingSprite.position.x += yeti.velocity.actual;
+            customBg2.tilingSprite.position.x += yeti.velocity.actual;
+        }
+    }
+    yeti.update(socket);
 }
 
 socket.on('user joined', function(data) {
@@ -75,35 +86,3 @@ socket.on('change position', function(data) {
     var toUpdate = _.find(enemy, {id: data.id});
     if(toUpdate) { toUpdate.updateServer(data.data)}
 });
-
-function animate(timestamp) {
-    requestAnimationFrame(animate);
-
-
-    if (!timestamp) timestamp = 0;
-    var elapsed = timestamp - previous;
-    if (elapsed > 1000) elapsed = frameDuration;
-    lag += elapsed;
-
-    while (lag >= frameDuration) {
-
-        customBg.update(yeti.velocity.running ? yeti.velocity.actual : 0);
-        customBg2.update(yeti.velocity.running ? yeti.velocity.actual : 0);
-
-        if(yeti.velocity.running) {
-            if(yeti.sprite.position.x > r.width * 0.3) {
-                r.stage.position.x -= yeti.velocity.actual;
-                customBg.tilingSprite.position.x += yeti.velocity.actual;
-                customBg2.tilingSprite.position.x += yeti.velocity.actual;
-            }
-        }
-        yeti.update(socket);
-        lag -= frameDuration;
-    }
-
-
-    r.render();
-    previous = timestamp;
-
-}
-
