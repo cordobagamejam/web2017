@@ -42,6 +42,7 @@ function controls (user) {
     function checkKey(e) {
         e = e || window.event;
 
+
         if (e.keyCode == CGJ.controls.keyboard.JUMP.key1 || e.keyCode == CGJ.controls.keyboard.JUMP.key2) {
             // up arrow
             user.run(true, user.velocity.fast);
