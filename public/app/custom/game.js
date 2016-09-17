@@ -1,10 +1,7 @@
 var width = document.body.clientWidth > 1000 ? document.body.clientWidth : 1000;
 var height = document.body.clientHeight > 500 ? document.body.clientHeight : 500;
 
-var renderer = PIXI.autoDetectRenderer( width , height,  { transparent: true, view: document.getElementById('main-canvas') });
-
 var r = new ntRenderer('main');
-var stage = new PIXI.Container();
 var enemy = [];
 var yetiTexture;
 
@@ -30,7 +27,7 @@ function onLoadedCallback(loader, resources) {
 
     yetiTexture = resources.yeti.texture;
 
-    yeti = new player(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, stage);
+    yeti = new player(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, r.stage);
     socket.emit('add user', yetiName);
 
     controls(yeti);
@@ -42,7 +39,7 @@ function onLoadedCallback(loader, resources) {
 }
 
 socket.on('user joined', function(data) {
-    var newEnemy = new player(data.username, yetiTexture, {type: CGJ.players.type.ENEMY, id: data.id}, stage);
+    var newEnemy = new player(data.username, yetiTexture, {type: CGJ.players.type.ENEMY, id: data.id}, r.stage);
     enemy.push(newEnemy);
 });
 
@@ -53,7 +50,7 @@ socket.on('init users', function(data){
         var l = users.length;
         if(users.length) {
             for (var i = 0; i < l ; i++) {
-                var newEnemy = new player(users[i].username, yetiTexture, {type: CGJ.players.type.ENEMY, id: users[i].id}, stage);
+                var newEnemy = new player(users[i].username, yetiTexture, {type: CGJ.players.type.ENEMY, id: users[i].id}, r.stage);
                 var playerData = users[i].playerData;
 
                 if(playerData){
@@ -72,7 +69,7 @@ socket.on('user left', function(data){
     var toRemove = _.findIndex(enemy, {id: data.id});
 
     if(toRemove >= 0){
-        enemy[toRemove].destroy(stage);
+        enemy[toRemove].destroy(r.stage);
         enemy.splice(toRemove, 1);
     }
 });
