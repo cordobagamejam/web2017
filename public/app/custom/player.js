@@ -7,7 +7,7 @@
  * @param lives
  */
 
-function player (name, texture, data, stage, lives) {
+function gjPlayer (name, texture, data, stage, lives) {
     // se crea el sprite
     this.sprite = new PIXI.Sprite(texture);
 
@@ -43,9 +43,9 @@ function player (name, texture, data, stage, lives) {
 
 // constantes
 
-player.prototype.lives = CGJ.players.lives;
+gjPlayer.prototype.lives = CGJ.players.lives;
 
-player.prototype.velocity = {
+gjPlayer.prototype.velocity = {
     running: false,
     fast: false,
     actual: 0,
@@ -53,31 +53,31 @@ player.prototype.velocity = {
     min: CGJ.players.velocity.min
 };
 
-player.prototype.acceleration = {
+gjPlayer.prototype.acceleration = {
     increase: CGJ.players.acceleration.increase,
     inertia: CGJ.players.acceleration.inertia
 };
 
-player.prototype.gravity = {
+gjPlayer.prototype.gravity = {
     actual: 0,
     max: CGJ.gravity.max,
     acceleration: CGJ.gravity.acceleration
 };
 
 
-player.prototype.jump = {
+gjPlayer.prototype.jump = {
     jumping: false,
     force: CGJ.players.jump
 };
 
-player.prototype.run = function (run, fast) {
+gjPlayer.prototype.run = function (run, fast) {
     this.velocity.running = run ? true : false;
     this.velocity.fast = fast ? true : false;
 };
 
 //se inicializa la posicion
 
-player.prototype.initPosition = function (position) {
+gjPlayer.prototype.initPosition = function (position) {
     if(!position) {return false;}
     this.sprite.position.x = position.x;
     this.sprite.position.y = position.y;
@@ -87,7 +87,7 @@ player.prototype.initPosition = function (position) {
 }
 
 // salta yeti salta
-player.prototype.DoJump = function () {
+gjPlayer.prototype.DoJump = function () {
     if (this.jump.jumping){
         return false;
     }
@@ -95,13 +95,13 @@ player.prototype.DoJump = function () {
 };
 
 // agunataaaa
-player.prototype.stop = function() {
+gjPlayer.prototype.stop = function() {
     this.velocity.running = false;
     this.velocity.actual = 0;
 };
 
 // se actualiza a si mismo con los controles locos
-player.prototype._updateSelf = function (realtime) {
+gjPlayer.prototype._updateSelf = function (realtime) {
 
     //si el loco salta creo gravedad, cosmico
     if (this.jump.jumping) {
@@ -136,7 +136,7 @@ player.prototype._updateSelf = function (realtime) {
 
 //se updatea la posicion desde el server
 
-player.prototype.updateServer = function (playerData) {
+gjPlayer.prototype.updateServer = function (playerData) {
     if(!playerData) {return false}
     this.sprite.position.x = playerData.x;
     this.sprite.position.y = playerData.y;
@@ -145,7 +145,7 @@ player.prototype.updateServer = function (playerData) {
 
 
 // no se lo que quice hacer aca
-player.prototype.update = function (realtime) {
+gjPlayer.prototype.update = function (realtime) {
    if (this.data) {
        if (this.data.type === CGJ.players.type.PLAYABLE) {
         this._updateSelf(realtime)
@@ -154,7 +154,7 @@ player.prototype.update = function (realtime) {
 };
 
 // ataccheame esta
-player.prototype.attach = function (stage) {
+gjPlayer.prototype.attach = function (stage) {
     stage.addChild(this.sprite);
     if(this.text) {
         stage.addChild(this.text);
@@ -162,7 +162,7 @@ player.prototype.attach = function (stage) {
 };
 
 // borra todo
-player.prototype.destroy = function (stage) {
+gjPlayer.prototype.destroy = function (stage) {
   if(!stage) {return false};
     stage.removeChild(this.sprite);
     if(this.text){

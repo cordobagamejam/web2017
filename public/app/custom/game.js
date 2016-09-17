@@ -20,7 +20,7 @@ function onLoadedCallback(loader, resources) {
 
     yetiTexture = resources.yeti.texture;
 
-    yeti = new player(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, r.stage);
+    yeti = new gjPlayer(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, r.stage);
     socket.emit('add user', yetiName);
 
     controls(yeti);
@@ -47,7 +47,7 @@ function gameUpdate() {
 }
 
 socket.on('user joined', function(data) {
-    var newEnemy = new player(data.username, yetiTexture, {type: CGJ.players.type.ENEMY, id: data.id}, r.stage);
+    var newEnemy = new gjPlayer(data.username, yetiTexture, {type: CGJ.players.type.ENEMY, id: data.id}, r.stage);
     enemy.push(newEnemy);
 });
 
@@ -58,7 +58,7 @@ socket.on('init users', function(data){
         var l = users.length;
         if(users.length) {
             for (var i = 0; i < l ; i++) {
-                var newEnemy = new player(users[i].username, yetiTexture, {type: CGJ.players.type.ENEMY, id: users[i].id}, r.stage);
+                var newEnemy = new gjPlayer(users[i].username, yetiTexture, {type: CGJ.players.type.ENEMY, id: users[i].id}, r.stage);
                 var playerData = users[i].playerData;
 
                 if(playerData){
