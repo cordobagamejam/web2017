@@ -1,6 +1,3 @@
-var width = document.body.clientWidth > 1000 ? document.body.clientWidth : 1000;
-var height = document.body.clientHeight > 500 ? document.body.clientHeight : 500;
-
 var r = new ntRenderer('main');
 var enemy = [];
 var yetiTexture;
@@ -94,7 +91,7 @@ function animate(timestamp) {
         customBg2.update(yeti.velocity.running ? yeti.velocity.actual : 0);
 
         if(yeti.velocity.running) {
-            if(yeti.sprite.position.x > width * 0.3) {
+            if(yeti.sprite.position.x > r.width * 0.3) {
                 r.stage.position.x -= yeti.velocity.actual;
                 customBg.tilingSprite.position.x += yeti.velocity.actual;
                 customBg2.tilingSprite.position.x += yeti.velocity.actual;
