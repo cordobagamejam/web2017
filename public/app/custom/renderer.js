@@ -9,7 +9,7 @@ function gjRenderer (name, w , h) {
 
     self.name = name;
     self.width  = w  ||  document.body.clientWidth > self.minWidth ? document.body.clientWidth : self.minWidth;
-    self.height = h  ||  document.body.clientHeight > self.minHeight ? document.body.clientHeight : self.minHeight;
+    self.height = h || 300  ||  document.body.clientHeight > self.minHeight ? document.body.clientHeight : self.minHeight;
 
     self.instance   = PIXI.autoDetectRenderer( self.width , self.height,  { transparent: true, view: document.getElementById(self.name) });
     self.stage      = new PIXI.Container();
@@ -33,7 +33,7 @@ gjRenderer.prototype.onResize = function(w, h) {
 
     window.onresize = function() {
         self.width = w  || document.body.clientWidth > self.minWidth ? document.body.clientWidth : self.minWidth;
-        self.height = h ||  document.body.clientHeight > self.minHeight ? document.body.clientHeight : self.minHeight;
+        self.height = h || 300 ||  document.body.clientHeight > self.minHeight ? document.body.clientHeight : self.minHeight;
         self.instance.resize(self.width , self.height);
     };
 };
