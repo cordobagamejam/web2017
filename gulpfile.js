@@ -73,7 +73,9 @@ gulp.task('clean', function(){
          .pipe(rimraf());
 });
 
-gulp.task('dev', ['copy', 'sass:watch', 'copyDev', 'server'] );
+gulp.task('dev', function(){
+    runSequence('copy', 'sass:watch', 'copyDev', 'server');
+});
 
 gulp.task('compile',function() {
     runSequence('clean', 'sass', 'copyImages', 'uglify:vendor','uglify:app', 'htmlCompile');
