@@ -12,14 +12,8 @@ var URL = location.protocol+'//'+location.host+'/score'
         request.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var result = JSON.parse(this.responseText);
-                
-                // Create element/s for the ranking
-                for(var i = 0; i < result.length; i++){
-                    var para = document.createElement('li');
-                    var t = document.createTextNode(result[i].name+': '+result[i].score);
-                    para.appendChild(t);
-                    document.getElementById(scoreID).appendChild(para);
-                }
+
+                _attach(result, scoreID);
             }
         };
         request.open('GET', URL, true);
@@ -33,5 +27,22 @@ var URL = location.protocol+'//'+location.host+'/score'
         xmlhttp.send(JSON.stringify({name:paramName, score:paramValue}))
     }
 
-scoreService.setScore('chafa', 55553555);
+
+function _attach(result, scoreID) {
+    // Create element/s for the ranking
+
+    var parent = document.getElementById(scoreID);
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+
+    for(var i = 0; i < result.length; i++){
+        var para = document.createElement('li');
+        var t = document.createTextNode(result[i].name+': '+result[i].score);
+        para.appendChild(t);
+        parent.appendChild(para);
+    }
+}
+
+scoreService.setScore('chafa', Math.floor(Math.random()*100));
 scoreService.getScore('score');
