@@ -19,11 +19,11 @@ function onLoadedCallback(loader, resources) {
     background.ground = new gjBackground(resources.texture2.texture, {width: renderer.width, initVelocity: 0.3} , renderer);
     background.air = new gjBackground(resources.texture.texture, {width: renderer.width}, renderer);
 
-    yetiName = prompt('Elija un nombre','Jugador1');
+    var name = prompt('Elija un nombre','Jugador1');
 
     playerTexture = resources.yeti.texture;
 
-    player = new gjPlayer(yetiName, playerTexture, {type: CGJ.players.type.PLAYABLE}, renderer, socket);
+    player = new gjPlayer(name, playerTexture, {type: CGJ.players.type.PLAYABLE}, renderer, socket);
 
     background.ground.setPosition({y: 50});
     background.air.setPosition({y: 295});
