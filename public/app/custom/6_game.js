@@ -13,14 +13,14 @@ PIXI.loader
 
 
 function onLoadedCallback(loader, resources) {
-    customBg = new gjBackground(resources.texture2.texture, renderer.width , undefined, renderer.stage, 0.3);
-    customBg2 = new gjBackground(resources.texture.texture, renderer.width , undefined, renderer.stage, 0);
+    customBg = new gjBackground(resources.texture2.texture, {width: renderer.width, initVelocity: 0.3} , renderer);
+    customBg2 = new gjBackground(resources.texture.texture, {width: renderer.width}, renderer);
 
     yetiName = prompt('Elija un nombre','Jugador1');
 
     yetiTexture = resources.yeti.texture;
 
-    player = new gjPlayer(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, renderer.stage);
+    player = new gjPlayer(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, renderer);
     socket.emit('add user', yetiName);
 
     customBg.tilingSprite.position.y = 50;

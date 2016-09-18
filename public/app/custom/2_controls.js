@@ -4,13 +4,13 @@
  * @returns {boolean}
  */
 
-function controls (user) {
+function controls (user, canvas) {
 
     if (!user) { return false; }
 
     // add touch controls
 
-    var element = document.getElementById('main');
+    var element = document.getElementById(canvas);
     var mc = Hammer(element);
 
     mc.on(CGJ.controls.touch.RUN, checkPress);

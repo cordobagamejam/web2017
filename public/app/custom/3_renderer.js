@@ -1,4 +1,10 @@
-
+/**
+ * Renderer constructor
+ * @param name
+ * @param w
+ * @param h
+ * @returns {boolean}
+ */
 function gjRenderer (name, w , h) {
     var self = this;
 

@@ -7,7 +7,7 @@
  * @param lives
  */
 
-function gjPlayer (name, texture, data, stage, lives) {
+function gjPlayer (name, texture, data, renderer, lives) {
     // se crea el sprite
 
     var self = this;
@@ -31,7 +31,7 @@ function gjPlayer (name, texture, data, stage, lives) {
 
         if(self.data.type == CGJ.players.type.PLAYABLE) {
             gjPlayer.prototype.controls = controls;
-            self.controls(self);
+            self.controls(self, renderer.name);
         }
     }
 
@@ -39,8 +39,8 @@ function gjPlayer (name, texture, data, stage, lives) {
 
 
     //se atachea a una escena
-    if (stage) {
-        self.attach(stage);
+    if (renderer) {
+        self.attach(renderer);
     }
 
     if (lives) {
@@ -175,23 +175,23 @@ gjPlayer.prototype.update = function (realtime) {
 };
 
 // ataccheame esta
-gjPlayer.prototype.attach = function (stage) {
+gjPlayer.prototype.attach = function (renderer) {
     var self = this;
-    stage.addChild(self.sprite);
+    renderer.stage.addChild(self.sprite);
     if(self.text) {
-        stage.addChild(self.text);
+        renderer.stage.addChild(self.text);
     }
 };
 
 // borra todo
-gjPlayer.prototype.destroy = function (stage) {
+gjPlayer.prototype.destroy = function (renderer) {
     var self = this;
 
-    if(!stage) {return false};
+    if(!renderer) {return false};
 
-    stage.removeChild(self.sprite);
+    renderer.stage.removeChild(self.sprite);
 
     if(self.text){
-            stage.removeChild(self.text);
+        renderer.stage.removeChild(self.text);
     }
 };

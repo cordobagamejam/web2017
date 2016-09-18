@@ -1,15 +1,15 @@
-function gjBackground (texture, width, height, stage, initVel) {
+function gjBackground (texture, data, renderer ) {
     var self = this;
 
-    self.width = width || texture.width;
-    self.height = height || texture.height;
-    self.initVelocity = initVel ? initVel : 0;
+    self.width = data.width || texture.width;
+    self.height = data.height || texture.height;
+    self.initVelocity = data.initVelocity ? data.initVelocity : 0;
     self.blur = new PIXI.filters.BlurFilter();
     self.blur.blur = 0;
     self.tilingSprite = new PIXI.extras.TilingSprite(texture, self.width, self.height);
     self.tilingSprite.filters = [self.blur];
-    if (stage) {
-        self.attach(stage);
+    if (renderer) {
+        self.attach(renderer);
     }
 }
 
@@ -20,7 +20,7 @@ gjBackground.prototype.update = function (vel) {
     self.tilingSprite.tilePosition.x -= self.velocity;
 };
 
-gjBackground.prototype.attach = function (stage) {
+gjBackground.prototype.attach = function (renderer) {
     var self = this;
-    stage.addChild(self.tilingSprite);
+    renderer.stage.addChild(self.tilingSprite);
 };
