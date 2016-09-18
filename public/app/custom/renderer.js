@@ -9,7 +9,7 @@ function gjRenderer (name, w , h) {
 
     self.name = name;
     self.width  = w  ||  document.body.clientWidth > self.minWidth ? document.body.clientWidth : self.minWidth;
-    self.height = h || 300  ||  document.body.clientHeight > self.minHeight ? document.body.clientHeight : self.minHeight;
+    self.height = h  ||  self.minHeight;
 
     self.instance   = PIXI.autoDetectRenderer( self.width , self.height,  { transparent: true, view: document.getElementById(self.name) });
     self.stage      = new PIXI.Container();
@@ -24,7 +24,7 @@ function gjRenderer (name, w , h) {
 //set fps at 60
 gjRenderer.prototype.fps = 60;
 
-gjRenderer.prototype.minHeight = 500;
+gjRenderer.prototype.minHeight = 300;
 gjRenderer.prototype.minWidth = 1000;
 
 
@@ -32,8 +32,8 @@ gjRenderer.prototype.onResize = function(w, h) {
     var self = this;
 
     window.onresize = function() {
-        self.width = w  || document.body.clientWidth > self.minWidth ? document.body.clientWidth : self.minWidth;
-        self.height = h || 300 ||  document.body.clientHeight > self.minHeight ? document.body.clientHeight : self.minHeight;
+        self.width  = w || document.body.clientWidth > self.minWidth ? document.body.clientWidth : self.minWidth;
+        self.height = h ||  self.minHeight;
         self.instance.resize(self.width , self.height);
     };
 };
