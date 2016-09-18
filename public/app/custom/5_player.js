@@ -13,6 +13,9 @@ function gjPlayer (name, texture, data, renderer, socket, lives) {
     var self = this;
 
     self.sprite = new PIXI.Sprite(texture);
+    self.width = Number(self.sprite.width);
+    self.height = Number(self.sprite.height);
+
     self.name = name;
     //se crea el nombre
     if (name) {
