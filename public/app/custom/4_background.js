@@ -1,8 +1,8 @@
 function gjBackground (texture, data, renderer ) {
     var self = this;
 
-    self.width = data.width || texture.width;
-    self.height = data.height || texture.height;
+    self.width = Number(data.width || texture.width);
+    self.height = Number(data.height || texture.height);
     self.initVelocity = data.initVelocity ? data.initVelocity : 0;
     self.blur = new PIXI.filters.BlurFilter();
     self.blur.blur = 0;
@@ -18,14 +18,19 @@ function gjBackground (texture, data, renderer ) {
     if(!self.canHit) {
         self.sprite = new PIXI.extras.TilingSprite(texture, self.width, self.height);
         self.sprite.filters = [self.blur];
+        self.visible = true;
     } else {
         self.sprite = new PIXI.Sprite(texture);
         self.sprite.filters = [self.blur];
-
+        self.visible = false;
     }
+
+    self.sprite.visible = self.visible;
+
     if (renderer) {
         self.attach(renderer);
     }
+
 }
 
 
@@ -38,11 +43,11 @@ gjBackground.prototype.setPosition = function (pos) {
 
 
     if(p.x) {
-        self.position.x = p.x;
+        self.position.x = Number(p.x);
         self.sprite.position.x = self.position.x;
     }
     if(p.y) {
-        self.position.y = p.y;
+        self.position.y = Number(p.y);
         self.sprite.position.y = self.position.y;
     }
 };
@@ -57,12 +62,21 @@ gjBackground.prototype.update = function (vel, rect) {
     if(!self.canHit) {
         self.sprite.tilePosition.x -= self.velocity;
     } else {
-        if(!self.hit(rect)) {
-            self.sprite.visible = false;
+
+        var pos = self.position;
+        if((pos.x + self.width ) < rect.x  || (pos.x + self.width) > rect.width) {
+            self.visible = false;
+        } else {
+            self.visible = true;
         }
+
+        self.sprite.visible = self.visible
+
     }
 
 };
+
+
 
 gjBackground.prototype.attach = function (renderer) {
     var self = this;
@@ -73,12 +87,14 @@ gjBackground.prototype.hit  = function(sizePos) {
 
     var self = this;
 
-    return !(sizePos.x > (self.x + self.width) ||
+        return !(self.position.x > (sizePos.x + sizePos.width) ||
 
-    (sizePos.x + sizePos.width) < self.position.x ||
+        (self.position.x + self.width) < sizePos.x ||
 
-    sizePos.y > (self.position.y + self.height) ||
+        sizePos.y > (self.position.y + self.height) ||
 
-    (sizePos.y + sizePos.height) < self.position.y);
+        (sizePos.y + sizePos.height) < self.position.y);
+
 
 };
+
