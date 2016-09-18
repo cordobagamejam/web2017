@@ -13,7 +13,7 @@ function _setScore(param_name, param_value, callback){
 //form saved obj
     var val = {
         name : param_name, 
-        score : param_value
+        score : Number(param_value)
     };
 
 //connect to the db
