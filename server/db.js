@@ -24,11 +24,7 @@ function _setScore(param_name, param_value, callback){
         //insert new document
         col.insertOne(val, function(err, result){
             //on document creation, response the new score list
-            col.find().sort({score: -1}).limit(LIMIT).toArray(function(err, docs){
-            	if(typeof callback === 'function') {
-                	callback(docs);
-				}
-            });
+            callback(result);
             //close db
             db.close();
         });
@@ -41,14 +37,14 @@ function _getScore(callback) {
         //use score collection
 		var col = db.collection('score');
 	    //find 10 top users sorted by score 
-	    col.find({},{'sort':[['score','desc']]}).toArray(function(err, docs) {
+	    col.find().sort({'score': -1}).limit(LIMIT).toArray(function(err, docs) {
 	    	//check if callback is a function to return async result
             if(typeof callback === 'function') {
                 callback(docs);
+                db.close();
             }
 	    });
         //wait db executions and close after it
-		db.close();
 	});
 }
 
