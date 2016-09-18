@@ -7,6 +7,7 @@ var player;
 var enemy = [];
 
 var background = {};
+var obj = [];
 
 PIXI.loader
     .add('texture', 'assets/p2.png')
