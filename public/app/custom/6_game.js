@@ -39,8 +39,8 @@ function gameUpdate() {
     if(player.velocity.running) {
         if(player.sprite.position.x > renderer.width * 0.3) {
             renderer.stage.position.x -= player.velocity.actual;
-            background.ground.tilingSprite.position.x += player.velocity.actual;
-            background.air.tilingSprite.position.x += player.velocity.actual;
+            background.ground.setPosition({x : background.ground.position.x + player.velocity.actual});
+            background.air.setPosition({x : background.air.position.x + player.velocity.actual});
         }
     }
     player.update(socket);

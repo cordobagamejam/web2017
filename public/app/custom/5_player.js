@@ -137,6 +137,7 @@ gjPlayer.prototype._updateSelf = function (realtime) {
 
         if (self.sprite.position.y > self.floor) {
             self.sprite.position.y = self.floor;
+            self.position.y = self.sprite.position.y;
             self.jump.jumping = false;
             self.gravity.actual = self.gravity.acceleration;
         }
@@ -160,7 +161,7 @@ gjPlayer.prototype._updateSelf = function (realtime) {
         self.text.x = self.sprite.position.x;
 
         //se emite coso realtime
-        realtime.emit('change position', {x: self.sprite.position.x, y: self.sprite.position.y});
+        realtime.emit('change position', {x: self.position.x, y: self.position.y});
     }
 };
 

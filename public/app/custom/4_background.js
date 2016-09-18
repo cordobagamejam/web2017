@@ -23,16 +23,19 @@ function gjBackground (texture, data, renderer ) {
 gjBackground.prototype.setPosition = function (pos) {
     var self = this;
     var p = {
-        x : pos.x | 0,
-        y:  pos.y | 0
+        x : pos.x || self.position.x || 0,
+        y:  pos.y || self.position.y || 0
+    };
+
+
+    if(p.x) {
+        self.position.x = p.x;
+        self.tilingSprite.position.x = self.position.x;
     }
-
-    self.position.x = p.x;
-    self.position.y = p.y;
-
-    self.tilingSprite.position.x = self.position.x;
-    self.tilingSprite.position.y = self.position.y;
-
+    if(p.y) {
+        self.position.y = p.y;
+        self.tilingSprite.position.y = self.position.y;
+    }
 };
 
 
@@ -41,8 +44,6 @@ gjBackground.prototype.update = function (vel) {
     self.velocity = self.initVelocity * (vel ? vel : 1)  + (vel ? vel : 0);
     self.blur.blurX = vel ? self.velocity * (self.velocity / 10) : 0;
     self.tilingSprite.tilePosition.x -= self.velocity;
-    self.position.x = self.tilingSprite.tilePosition.x;
-    self.position.y = self.tilingSprite.tilePosition.y;
 
 };
 
