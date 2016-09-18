@@ -1,9 +1,12 @@
 var renderer = new gjRenderer('main');
-var enemy = [];
-var yetiTexture;
-
 var socket = io();
+
+var playerTexture;
+
 var player;
+var enemy = [];
+
+var background = {};
 
 PIXI.loader
     .add('texture', 'assets/p2.png')
@@ -13,32 +16,31 @@ PIXI.loader
 
 
 function onLoadedCallback(loader, resources) {
-    customBg = new gjBackground(resources.texture2.texture, {width: renderer.width, initVelocity: 0.3} , renderer);
-    customBg2 = new gjBackground(resources.texture.texture, {width: renderer.width}, renderer);
+    background.ground = new gjBackground(resources.texture2.texture, {width: renderer.width, initVelocity: 0.3} , renderer);
+    background.air = new gjBackground(resources.texture.texture, {width: renderer.width}, renderer);
 
     yetiName = prompt('Elija un nombre','Jugador1');
 
-    yetiTexture = resources.yeti.texture;
+    playerTexture = resources.yeti.texture;
 
-    player = new gjPlayer(yetiName, yetiTexture, {type: CGJ.players.type.PLAYABLE}, renderer);
-    socket.emit('add user', yetiName);
+    player = new gjPlayer(yetiName, playerTexture, {type: CGJ.players.type.PLAYABLE}, renderer, socket);
 
-    customBg.tilingSprite.position.y = 50;
-    customBg2.tilingSprite.position.y = 295;
+    background.ground.setPosition({y: 50});
+    background.air.setPosition({y: 295});
 
     renderer.doLoop(gameUpdate);
 }
 
 
 function gameUpdate() {
-    customBg.update(player.velocity.running ? player.velocity.actual : 0);
-    customBg2.update(player.velocity.running ? player.velocity.actual : 0);
+    background.ground.update(player.velocity.running ? player.velocity.actual : 0);
+    background.air.update(player.velocity.running ? player.velocity.actual : 0);
 
     if(player.velocity.running) {
         if(player.sprite.position.x > renderer.width * 0.3) {
             renderer.stage.position.x -= player.velocity.actual;
-            customBg.tilingSprite.position.x += player.velocity.actual;
-            customBg2.tilingSprite.position.x += player.velocity.actual;
+            background.ground.tilingSprite.position.x += player.velocity.actual;
+            background.air.tilingSprite.position.x += player.velocity.actual;
         }
     }
     player.update(socket);

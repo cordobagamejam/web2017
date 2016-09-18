@@ -7,13 +7,13 @@
  * @param lives
  */
 
-function gjPlayer (name, texture, data, renderer, lives) {
+function gjPlayer (name, texture, data, renderer, socket, lives) {
     // se crea el sprite
 
     var self = this;
 
     self.sprite = new PIXI.Sprite(texture);
-
+    self.name = name;
     //se crea el nombre
     if (name) {
         self.text = new PIXI.Text(name);
@@ -45,6 +45,12 @@ function gjPlayer (name, texture, data, renderer, lives) {
 
     if (lives) {
         self.lives = lives;
+    }
+
+    self.socket = socket;
+
+    if(self.socket) {
+        self.socket.emit('add user', self.name);
     }
 
 }
@@ -93,6 +99,7 @@ gjPlayer.prototype.initPosition = function (position) {
     if(!position) {return false;}
     self.sprite.position.x = position.x;
     self.sprite.position.y = position.y;
+    self.position = position;
     self.text.x = position.x;
     self.floor = position.y;
     self.text.y = position.y + self.sprite.height;
@@ -126,6 +133,8 @@ gjPlayer.prototype._updateSelf = function (realtime) {
     if (self.jump.jumping) {
         self.gravity.actual = self.gravity.actual <= self.gravity.max ? self.gravity.actual + self.gravity.acceleration : self.gravity.max;
         self.sprite.position.y = self.sprite.position.y - (self.jump.force - self.gravity.actual);
+        self.position = self.sprite.position;
+
         if (self.sprite.position.y > self.floor) {
             self.sprite.position.y = self.floor;
             self.jump.jumping = false;
@@ -146,6 +155,8 @@ gjPlayer.prototype._updateSelf = function (realtime) {
 
         //updateame esta posicion
         self.sprite.position.x = self.sprite.position.x + self.velocity.actual;
+        self.position = self.sprite.position;
+
         self.text.x = self.sprite.position.x;
 
         //se emite coso realtime
@@ -160,6 +171,7 @@ gjPlayer.prototype.updateServer = function (playerData) {
     if(!playerData) {return false}
     self.sprite.position.x = playerData.x;
     self.sprite.position.y = playerData.y;
+    self.position = self.sprite.position;
     self.text.x = self.sprite.position.x;
 };
 
