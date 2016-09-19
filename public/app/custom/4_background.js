@@ -83,8 +83,13 @@ gjBackground.prototype.attach = function (renderer) {
     renderer.stage.addChild(self.sprite);
 };
 
-gjBackground.prototype.hit  = function(sizePos) {
+gjBackground.prototype.hit  = function(player) {
 
+    if(!player.alive) {
+        return;
+    }
+
+    var sizePos = {x: player.position.x, y: player.position.y, width: player.width, height: player.height};
     var self = this;
 
         return !(self.position.x > (sizePos.x + sizePos.width) ||

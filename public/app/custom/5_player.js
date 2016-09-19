@@ -3,11 +3,9 @@
  * @param name
  * @param texture
  * @param data
- * @param stage
- * @param lives
  */
 
-function gjPlayer (name, texture, data, renderer, socket, lives) {
+function gjPlayer (name, texture, data, renderer, socket) {
     // se crea el sprite
 
     var self = this;
@@ -15,7 +13,7 @@ function gjPlayer (name, texture, data, renderer, socket, lives) {
     self.sprite = new PIXI.Sprite(texture);
     self.width = Number(self.sprite.width);
     self.height = Number(self.sprite.height);
-
+    self.alive = true;
     self.name = name;
     //se crea el nombre
     if (name) {
@@ -46,9 +44,6 @@ function gjPlayer (name, texture, data, renderer, socket, lives) {
         self.attach(renderer);
     }
 
-    if (lives) {
-        self.lives = lives;
-    }
 
     self.socket = socket;
 
@@ -59,8 +54,6 @@ function gjPlayer (name, texture, data, renderer, socket, lives) {
 }
 
 // constantes
-
-gjPlayer.prototype.lives = CGJ.players.lives;
 
 gjPlayer.prototype.velocity = {
     running: false,
@@ -93,6 +86,11 @@ gjPlayer.prototype.run = function (run, fast) {
     self.velocity.fast = fast ? true : false;
 };
 
+gjPlayer.prototype.respawn = function() {
+    var self = this;
+    self.initPosition({x:CGJ.players.type.PLAYABLE ? CGJ.players.default_position.left : -100, y: CGJ.players.default_position.floor});
+};
+
 //se inicializa la posicion
 
 gjPlayer.prototype.initPosition = function (position) {
@@ -100,6 +98,7 @@ gjPlayer.prototype.initPosition = function (position) {
     var self  = this;
 
     if(!position) {return false;}
+    self.alive = true;
     self.sprite.position.x = position.x;
     self.sprite.position.y = position.y;
     self.position = position;
@@ -133,6 +132,10 @@ gjPlayer.prototype._updateSelf = function (realtime) {
 
     var self = this;
     //si el loco salta creo gravedad, cosmico
+    if(!self.alive) {
+        return;
+    }
+
     if (self.jump.jumping) {
         self.gravity.actual = self.gravity.actual <= self.gravity.max ? self.gravity.actual + self.gravity.acceleration : self.gravity.max;
         self.sprite.position.y = self.sprite.position.y - (self.jump.force - self.gravity.actual);
@@ -183,6 +186,11 @@ gjPlayer.prototype.updateServer = function (playerData) {
 // no se lo que quice hacer aca
 gjPlayer.prototype.update = function (realtime) {
     var self = this;
+
+    if(!self.alive) {
+        return;
+    }
+
     if (self.data) {
        if (self.data.type === CGJ.players.type.PLAYABLE) {
            self._updateSelf(realtime)
@@ -198,6 +206,13 @@ gjPlayer.prototype.attach = function (renderer) {
         renderer.stage.addChild(self.text);
     }
 };
+
+gjPlayer.prototype.die = function() {
+    var self = this;
+    self.alive = false;
+    self.sprite.tint =  0xFF0000;
+    self.stop();
+}
 
 // borra todo
 gjPlayer.prototype.destroy = function (renderer) {

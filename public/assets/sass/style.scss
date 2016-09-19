@@ -161,3 +161,14 @@ ul {
   right: 0;
   width: 100%;
 }
+
+.main__wrapper {
+  position: relative;
+  .retry {
+    background: rgba(white, 0.5);
+    position: relative;
+    margin: auto;
+    margin-top: 50px;
+
+  }
+}

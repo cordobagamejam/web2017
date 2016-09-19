@@ -47,32 +47,35 @@ function onLoadedCallback(loader, resources) {
 
 function gameUpdate() {
     var vel = player.velocity.running ? player.velocity.actual : 0;
+
     background.air.update(vel);
     background.ground.update(vel);
 
 
-    for (var i = 0; i < objlength; i++) {
 
-        obj[i].update(vel ,  {x: -renderer.stage.position.x  , y: 0, width: renderer.width + player.sprite.position.x,  height: renderer.height }, player);
+        for (var i = 0; i < objlength; i++) {
 
-        if(obj[i].hit({x: player.position.x, y: player.position.y, width: player.width, height: player.height})) {
-            console.log('se chocoooooooooo');
-        }
-    }
+            obj[i].update(vel ,  {x: -renderer.stage.position.x  , y: 0, width: renderer.width + player.sprite.position.x,  height: renderer.height }, player);
 
-
-    if(player.velocity.running) {
-        if(player.sprite.position.x > renderer.width * 0.3) {
-            renderer.stage.position.x -= player.velocity.actual;
-            background.air.setPosition({x : background.air.position.x + player.velocity.actual});
-            background.ground.setPosition({x : background.ground.position.x + player.velocity.actual});
-        } else {
-            for (var i = 0; i < objlength; i++) {
-                obj[i].setPosition({x : obj[i].position.x - player.velocity.actual});
+            if(obj[i].hit(player)) {
+                player.die();
             }
         }
 
-    }
+
+        if(player.velocity.running) {
+            if(player.sprite.position.x > renderer.width * 0.3) {
+                renderer.stage.position.x -= player.velocity.actual;
+                background.air.setPosition({x : background.air.position.x + player.velocity.actual});
+                background.ground.setPosition({x : background.ground.position.x + player.velocity.actual});
+            } else {
+                for (var i = 0; i < objlength; i++) {
+                    obj[i].setPosition({x : obj[i].position.x - player.velocity.actual});
+                }
+            }
+
+        }
+
 
     player.update(socket);
 }
