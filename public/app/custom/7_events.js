@@ -1,6 +1,14 @@
+ socket.io.reconnect();
+
+
 socket.on('user joined', function(data) {
     var newEnemy = new gjPlayer(data.username, playerTexture, {type: CGJ.players.type.ENEMY, id: data.id}, renderer);
     enemy.push(newEnemy);
+});
+
+socket.on('score update', function(result) {
+    console.log('score------' , result);
+    scoreService.updateScoreList(result, 'score');
 });
 
 socket.on('init users', function(data){
