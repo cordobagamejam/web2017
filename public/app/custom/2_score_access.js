@@ -3,7 +3,8 @@ var URL = location.protocol+'//'+location.host+'/score'
 // Objeto scoreService
     var scoreService = {
         getScore : _getScore,
-        setScore : _setScore
+        setScore : _setScore,
+        updateScoreList : _attach
     }
 
 // Get the score from the server trought AJAX
@@ -44,5 +45,5 @@ function _attach(result, scoreID) {
     }
 }
 
-scoreService.setScore('chafa', Math.floor(Math.random()*100));
+//scoreService.setScore('chafa', Math.floor(Math.random()*100));
 scoreService.getScore('score');

@@ -1,11 +1,17 @@
 var _ = require('lodash');
 
-module.exports = function(io, numUsers) {
+module.exports = function(io, numUsers, score) {
     var numUsers = 0;
-
 
     io.on('connection', function (socket) {
         var addedUser = false;
+
+
+        score.onScoreChange(function(results) {
+            console.log('results score----->', results);
+            io.emit('score update', results);
+        });
+
 
         // when the client emits 'new message', this listens and executes
         socket.on('change position', function (data) {
@@ -25,6 +31,7 @@ module.exports = function(io, numUsers) {
 
             // we store the username in the socket session for this client
             socket.username = username;
+
             ++numUsers;
             addedUser = true;
 

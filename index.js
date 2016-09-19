@@ -20,7 +20,7 @@ app.get('/', function(req, res){
 });
 
 var numUsers = 0;
-realtime(io, numUsers);
+realtime(io, numUsers, db_service);
 
 
 //on try to check score, return scored array
@@ -46,3 +46,4 @@ app.post('/score', function(req, res){
         res.status(400).send('Error, se necesita nombre: {"name": "YOUR_NAME", "score": Number("YOUR_SCORE")}');
     }
 });
+
