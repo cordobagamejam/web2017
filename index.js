@@ -5,7 +5,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 var realtime = require('./server/realtime');
-var db_service = require('./server/db');
+var db_service = require('./server/score');
 var bodyParser = require('body-parser')
 
 server.listen(port, function () {
@@ -25,12 +25,16 @@ realtime(io, numUsers, db_service);
 
 //on try to check score, return scored array
 app.get('/score', function(req, res){
-	db_service.getScore(function(results) {
+  db_service.getScore(function(results) {
+      res.send(results);
+  });
+});
+
+app.get('/lastDistance', function(req, res){
+	db_service.getLastDistance(function(results) {
   		res.send(results);
 	});
 });
-
-
 
 //create new score
 app.post('/score', function(req, res){

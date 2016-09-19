@@ -5,9 +5,7 @@
  */
 
 function controls (user, canvas) {
-
     if (!user) { return false; }
-
     // add touch controls
 
     var element = document.getElementById(canvas);
@@ -25,12 +23,9 @@ function controls (user, canvas) {
         user.DoJump();
     }
 
-
     //bind keyboard controls
     document.onkeydown = checkKey;
     document.onkeyup = checkKeyUp;
-
-
     function checkKeyUp (e) {
         e = e || window.event;
         if (e.keyCode == CGJ.controls.keyboard.RUN.key1 || e.keyCode == CGJ.controls.keyboard.RUN.key2) {
@@ -41,8 +36,6 @@ function controls (user, canvas) {
 
     function checkKey(e) {
         e = e || window.event;
-
-
         if (e.keyCode == CGJ.controls.keyboard.JUMP.key1 || e.keyCode == CGJ.controls.keyboard.JUMP.key2) {
             // up arrow
             user.run(true, user.velocity.fast);
@@ -56,10 +49,5 @@ function controls (user, canvas) {
             // right arrow
             user.run(true, true);
         }
-
     }
-
-
 }
-
-

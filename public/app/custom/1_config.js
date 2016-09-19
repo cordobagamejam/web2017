@@ -67,6 +67,4 @@ var CGJ = {
         //id
         default_id : 'self'
     }
-
-
 };
