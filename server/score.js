@@ -48,7 +48,7 @@ function _setScore(paramName, paramScore, paramDistance, callback){
     var val = {
         name : paramName,
         distance : paramDistance,
-        date : new Date()
+        date : new Date
     };
     if(paramScore){val.score = paramScore;}
 

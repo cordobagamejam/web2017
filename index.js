@@ -22,7 +22,6 @@ app.get('/', function(req, res){
 var numUsers = 0;
 realtime(io, numUsers, db_service);
 
-
 //on try to check score, return scored array
 app.get('/score', function(req, res){
   db_service.getScore(function(results) {
@@ -41,13 +40,11 @@ app.post('/score', function(req, res){
     //check if username exist
     if(req.body.name){
         //create and response new results
-        db_service.setScore(req.body.name, req.body.score || 0, function(docs){
+        db_service.setScore(req.body.name, req.body.score || 0, req.body.distance, function(docs){
             res.send(docs);
         });
-    }
-    else {
+    } else {
         //reject DB document creation
         res.status(400).send('Error, se necesita nombre: {"name": "YOUR_NAME", "score": Number("YOUR_SCORE")}');
     }
 });
-
