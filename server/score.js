@@ -69,19 +69,18 @@ function _setScore(paramName, paramScore, paramDistance, callback){
 
 function _getScore(callback) {
     //mongo connect
-	mongo.connect(db_name, function(err, db){
+    mongo.connect(db_name, function(err, db){
         //use score collection
-		var col = db.collection('score');
-	    //find LIMIT top users sorted by score 
-	    col.find().sort({'score': -1}).limit(LIMIT).toArray(function(err, docs) {
-	    	//check if callback is a function to return async result
+        var col = db.collection('score');
+        //find LIMIT top users sorted by score 
+        col.find().sort({'distance': -1}).limit(LIMIT).toArray(function(err, docs) {
+            //check if callback is a function to return async result
             if(typeof callback === 'function') {
                 callback(docs);
                 db.close();
             }
-	    });
-        //wait db executions and close after it
-	});
+        });
+    });
 }
 
 module.exports = db_service;

@@ -4,28 +4,41 @@ var URL = location.protocol+'//'+location.host+'/score';
 var scoreService = {
     getScore : _getScore,
     setScore : _setScore,
-    updateScoreList : _attach
+    updateScoreList : _attach,
+    sender : _sender
 }
 
 // Get the score from the server trought AJAX
 function _getScore(scoreID){
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var result = JSON.parse(this.responseText);
             _attach(result, scoreID);
         }
     };
-    request.open('GET', URL, true);
-    request.send();
+    xmlhttp.open('GET', URL, true);
+    xmlhttp.send();
+    // var config = { // Trying
+    //     method : 'GET'
+    // }
+    // scoreService.sender()
 }
 
 // Set new score in db
 function _setScore(paramName, paramValue){
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', URL, true);
-    xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xmlhttp.send(JSON.stringify({name:paramName, score:paramValue}))
+    // var xmlhttp = new XMLHttpRequest();
+    // xmlhttp.open('POST', URL, true);
+    // xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    // xmlhttp.send(JSON.stringify({name:paramName, score:paramValue}))
+    //
+    // Probe object
+    // var config = {
+    //     jsonData : {'name':'Juan',
+    //                 distance : 4000}
+    // }
+    //
+    scoreService.sender(config, null)
 }
 
 // Create element/s for the ranking
@@ -36,7 +49,7 @@ function _attach(result, scoreID) {
     }
     for(var i = 0; i < result.length; i++){
         var para = document.createElement('li');
-        var t = document.createTextNode(result[i].name+': '+result[i].distance);
+        var t = document.createTextNode(i+1+'- '+result[i].name+': '+result[i].distance);
         para.appendChild(t);
         parent.appendChild(para);
     }
@@ -45,7 +58,7 @@ function _attach(result, scoreID) {
 //scoreService.setScore('chafa', Math.floor(Math.random()*100));
 scoreService.getScore('score');
 
-function sender(parameters, callback) {
+function _sender(parameters, callback) {
     if(parameters['method'] === undefined){
         parameters['method'] = 'POST';}
     if(parameters['URL'] === undefined){
