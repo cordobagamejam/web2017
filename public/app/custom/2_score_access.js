@@ -27,6 +27,11 @@ function _getScore(scoreID){
 
 // Set new score in db
 function _setScore(paramName, paramValue){
+    senderConfig.method = 'POST';
+    senderConfig.jsonData = {
+        name : paramName,
+        distance: paramValue
+    };
     // var xmlhttp = new XMLHttpRequest();
     // xmlhttp.open('POST', URL, true);
     // xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -38,7 +43,7 @@ function _setScore(paramName, paramValue){
     //                 distance : 4000}
     // }
     //
-    scoreService.sender(config, null)
+    scoreService.sender(senderConfig, null)
 }
 
 // Create element/s for the ranking

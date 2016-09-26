@@ -172,6 +172,7 @@ gjPlayer.prototype.die = function() {
     self.sprite.tint =  0xFFFF00;
     self.stop();
     _try_again('Lose msg');
+    _setScore(self.name, 123456);
 }
 
 // borra todo

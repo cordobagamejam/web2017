@@ -68,3 +68,8 @@ var CGJ = {
         default_id : 'self'
     }
 };
+
+var senderConfig = {
+    method: 'POST',
+    jsonData: {name:'Jhonny', distance:203040}
+}
