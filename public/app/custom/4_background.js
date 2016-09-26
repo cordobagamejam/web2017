@@ -13,16 +13,25 @@ function gjBackground (texture, data, renderer ) {
     self.canHit =  data.canHit || false;
     if(!self.canHit) {
         self.sprite = new PIXI.extras.TilingSprite(texture, self.width, self.height);
-        self.sprite.filters = [self.blur];
-        self.visible = true;
     } else {
         self.sprite = new PIXI.Sprite(texture);
-        self.sprite.filters = [self.blur];
-        self.visible = false;
     }
+
+    self.visible = !self.canHit;
+    // self.sprite.filters = [self.blur];
     self.sprite.visible = self.visible;
     if (renderer) {self.attach(renderer);}
 }
+
+gjBackground.prototype.reset = function() {
+    var self = this;
+        self.position = {
+        x: 0,
+        y: 0,
+    };
+    self.sprite.position.x = 0;
+    self.sprite.position.y = 0;
+};
 
 gjBackground.prototype.setPosition = function (pos) {
     var self = this;

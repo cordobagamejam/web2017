@@ -28,6 +28,20 @@ function onLoadedCallback(loader, resources) {
     background.air.setPosition({y: 50});
     background.ground.setPosition({y: 295});
     renderer.doLoop(gameUpdate);
+    document.getElementById('retry_button').onclick = function(){
+        player.stop();
+        player.initPosition({x: CGJ.players.default_position.left , y: CGJ.players.default_position.floor});
+        player.sprite.tint =  0xFFFFFF;
+
+        renderer.stage.position.x = 0;
+        background.air.setPosition({x: 0.01, y: 50});
+        background.ground.setPosition({x: 0.01, y: 295});
+
+        for (var i = 0; i < objlength; i++) {
+            obj[i].setPosition({y: 235, x: ((i + 1) * 600) });
+        } 
+        _try_again('Lose msg');
+    };
 }
 
 function gameUpdate() {
@@ -51,3 +65,4 @@ function gameUpdate() {
         }
     player.update(socket);
 }
+

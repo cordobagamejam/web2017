@@ -68,10 +68,7 @@ gjPlayer.prototype.run = function (run, fast) {
     self.velocity.fast = fast ? true : false;
 };
 
-gjPlayer.prototype.respawn = function() {
-    var self = this;
-    self.initPosition({x:CGJ.players.type.PLAYABLE ? CGJ.players.default_position.left : -100, y: CGJ.players.default_position.floor});
-};
+
 
 //se inicializa la posicion
 gjPlayer.prototype.initPosition = function (position) {
@@ -84,7 +81,12 @@ gjPlayer.prototype.initPosition = function (position) {
     self.text.x = position.x;
     self.floor = position.y;
     self.text.y = position.y + self.sprite.height;
-}
+};
+
+gjPlayer.prototype.respawn = function() {
+    var self = this;
+    self.initPosition({x:CGJ.players.type.PLAYABLE ? CGJ.players.default_position.left : -100, y: CGJ.players.default_position.floor});
+};
 
 // salta yeti salta
 gjPlayer.prototype.DoJump = function () {
@@ -167,8 +169,9 @@ gjPlayer.prototype.attach = function (renderer) {
 gjPlayer.prototype.die = function() {
     var self = this;
     self.alive = false;
-    self.sprite.tint =  0xFF0000;
+    self.sprite.tint =  0xFFFF00;
     self.stop();
+    _try_again('Lose msg');
 }
 
 // borra todo
