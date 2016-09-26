@@ -173,7 +173,7 @@ gjPlayer.prototype.die = function() {
     self.stop();
     _try_again('Lose msg');
     alert(self.position.x);
-    _setScore(self.name, Math.round(self.position.x));
+    _setScore(self.name, {x: Math.round(self.position.x), y: Math.round(self.position.y)});
 }
 
 // borra todo
