@@ -5,4 +5,5 @@ function _try_again(elem, callback){
 
     document.getElementById(elem).style = toggleTryAgain ? "display:inline-block" : "display:none";
     toggleTryAgain = !toggleTryAgain;
+    document.getElementById('retry_button').focus();
 }
