@@ -74,7 +74,7 @@ gulp.task('clean', function(){
 });
 
 gulp.task('dev', function(){
-    runSequence('copy', 'sass:watch', 'copyDev', 'server');
+    runSequence('copy', 'sass', 'sass:watch', 'copyDev', 'server');
 });
 
 gulp.task('compile',function() {
