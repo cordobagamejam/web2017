@@ -164,11 +164,28 @@ ul {
 
 .main__wrapper {
   position: relative;
+  text-align: center;
   .retry {
-    background: rgba(white, 0.5);
-    position: relative;
+    top: 0;
+    left: 50%;
+    background: rgba(white, 0.9);
+    position: absolute;
     margin: auto;
     margin-top: 50px;
+    width: 900px;
+    margin-left: -450px;
+    padding: 40px 20px;
+    border: solid 5px black;
+    border-radius: 10px;
+
+    button {
+      font-weight: bold;
+      padding: 10px 20px;
+      background: black;
+      color: white;
+      border: solid 0px black;
+      border-radius : 5px;
+    }
 
   }
 }
