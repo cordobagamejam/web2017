@@ -168,12 +168,14 @@ gjPlayer.prototype.attach = function (renderer) {
 
 gjPlayer.prototype.die = function() {
     var self = this;
+    var score = {x: Math.round(self.position.x), y: Math.round(self.position.y)};
     self.alive = false;
     self.sprite.tint =  0xFFFF00;
     self.stop();
-    _try_again('Lose msg');
-    alert(self.position.x);
-    _setScore(self.name, {x: Math.round(self.position.x), y: Math.round(self.position.y)});
+
+
+    _try_again('Lose msg', score);
+    _setScore(self.name, score);
 }
 
 // borra todo

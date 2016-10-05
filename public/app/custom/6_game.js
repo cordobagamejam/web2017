@@ -39,8 +39,10 @@ function onLoadedCallback(loader, resources) {
 
         for (var i = 0; i < objlength; i++) {
             obj[i].setPosition({y: 235, x: ((i + 1) * 600) });
-        } 
-        _try_again('Lose msg');
+        }
+
+
+        _try_again('Lose msg', {y: player.position.y, x: player.position.x });
     };
 }
 
